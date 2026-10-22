@@ -214,7 +214,14 @@ Endpoints persistentes de reservas de salas
 
         Body:
 
-        { "estudiante": "Juan Perez", "email": "juan@email.com", "sala": "Sala Norte", "fecha": "2026-10-15", "turno": "Mañana", "personas": 4 }
+            {
+            "estudiante": "Ana Ejemplo",
+            "email": "ana@example.com",
+            "sala": "Sala Norte",
+            "fecha": "2026-10-21",
+            "turno": "Mañana",
+            "personas": 2
+            }
 
         Respuesta esperada:
 
