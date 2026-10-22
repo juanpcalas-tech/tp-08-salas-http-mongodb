@@ -9,6 +9,7 @@ const {
 const { crearManejadorErrores } = require("./middleware/errores");
 const { crearControladorReservas } = require("./controladores/reservas");
 const { crearRouterReservas } = require("./rutas/reservas");
+const { crearRouterReservasApi } = require("./rutas/reservas-api");
 
 function crearApp({ servicioReservas, formatoRegistro }) {
     const app = express();
@@ -26,7 +27,7 @@ function crearApp({ servicioReservas, formatoRegistro }) {
     app.get("/", (req, res) => {
         res.render("inicio", { titulo: "Reserva Salas" });
     });
-    app.get("/api/reservas", controlador.listarApi);
+    app.use("/api/reservas", crearRouterReservasApi(controlador));
     app.use("/reservas", crearRouterReservas(controlador));
     app.use((req, res) => {
         if (req.path.startsWith("/api/")) {

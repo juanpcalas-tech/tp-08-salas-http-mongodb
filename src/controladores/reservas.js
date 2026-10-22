@@ -31,6 +31,18 @@ function crearControladorReservas(servicio) {
         const reservas = await servicio.listar(req.query.categoria);
         res.json(reservas);
     }
-    return { listar, mostrarFormulario, mostrarDetalle, crear, listarApi };
+
+    async function obtenerApi(req, res) {
+        const reserva = await servicio.obtenerPorId(req.params.id);
+        if (!reserva) {
+            return res.status(404).json({ error: "Reserva no encontrada." });
+        }
+        res.json(reserva);
+    }
+    async function crearApi(req, res) {
+        const reserva = await servicio.crear(req.reservaValidada);
+        res.location(`/api/reservas/${reserva.id}`).status(201).json(reserva);
+    }
+    return { listar, mostrarFormulario, mostrarDetalle, crear, listarApi, obtenerApi, crearApi};
 }
 module.exports = { crearControladorReservas };
