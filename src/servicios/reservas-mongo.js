@@ -12,7 +12,13 @@ function representarReserva(documento) {
         disponible: documento.disponible
     }
 };
+
+
 function crearServicioReservasMongo() {
+
+    async function contar() {
+        return reservas.length;
+    }
     async function listar(sala) {
         const filtro = {};
         if (sala !== undefined) {
@@ -46,6 +52,6 @@ function crearServicioReservasMongo() {
         });
         return representarReserva(documento);
     }
-    return { listar, obtenerPorId, crear };
+    return { contar, listar, obtenerPorId, crear };
 }
 module.exports = { crearServicioReservasMongo };

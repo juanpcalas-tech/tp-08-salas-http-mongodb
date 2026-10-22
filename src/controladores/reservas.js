@@ -27,8 +27,15 @@ function crearControladorReservas(servicio) {
         await servicio.crear(req.reservaValidada);
         res.redirect("/reservas");
     }
+    function estado(req, res) {
+        res.status(200).json({
+            cantidad: servicioReservas.contar(),
+            idSolicitud: req.idSolicitud,
+        });
+    }
+
     async function listarApi(req, res) {
-        const reservas = await servicio.listar(req.query.categoria);
+        const reservas = await servicio.listar(req.query.sala);
         res.json(reservas);
     }
 
@@ -43,6 +50,6 @@ function crearControladorReservas(servicio) {
         const reserva = await servicio.crear(req.reservaValidada);
         res.location(`/api/reservas/${reserva.id}`).status(201).json(reserva);
     }
-    return { listar, mostrarFormulario, mostrarDetalle, crear, listarApi, obtenerApi, crearApi};
+    return { listar, mostrarFormulario, mostrarDetalle, crear, estado, listarApi, obtenerApi, crearApi };
 }
 module.exports = { crearControladorReservas };
