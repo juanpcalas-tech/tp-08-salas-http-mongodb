@@ -178,16 +178,9 @@ Endpoints persistentes de reservas de salas
 
     Captura: docs/evidencias/07-persistencia-post-reinicio.png    
 
-12. Comparación con TP07
-        TP07	                        TP08
-        Scripts independientes	        API integrada
-        Mongo usado desde terminal	    Mongo usado desde HTTP
-        Sin endpoint REST	            API REST completa
-        Sin GET /estado	                GET /estado disponible
-        Persistencia aislada	        Persistencia integrada
-        Sin header Location	Header      Location implementado    
+ 
 
-13. Reproducción de pruebas en Postman
+12. Reproducción de pruebas en Postman
         Listar reservas
         Método: GET
 
@@ -239,3 +232,12 @@ Endpoints persistentes de reservas de salas
         Respuesta esperada:
 
         200 OK
+
+13. Comparación con TP07
+        TP07	                        TP08
+        Scripts independientes	        API integrada
+        Mongo usado desde terminal	    Mongo usado desde HTTP
+        Sin endpoint REST	            API REST completa
+        Sin GET /estado	                GET /estado disponible
+        Persistencia aislada	        Persistencia integrada
+        Sin header Location	Header      Location implementado           
