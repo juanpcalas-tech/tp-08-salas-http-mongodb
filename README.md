@@ -55,6 +55,7 @@ Endpoints persistentes de reservas de salas
 
     * Servidor:
     http://localhost:3000
+    
 7. 
         tp-08-salas-http-mongodb/
         │
@@ -97,7 +98,8 @@ Endpoints persistentes de reservas de salas
         └── README.md
 
 8. Tabla de Endpoints
-    | Método	| Endpoint	| Descripción|
+    |METODO|ENDPOINT|DESCRIPCION|
+    | --- | --- | --- |
     |GET	|/estado| Estado general|
     |GET	|/api/reservas|	Listado completo|
     |GET	|/api/reservas?sala=Sala Norte|	Filtrado|

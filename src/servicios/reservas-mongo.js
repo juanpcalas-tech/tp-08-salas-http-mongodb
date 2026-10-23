@@ -16,9 +16,6 @@ function representarReserva(documento) {
 
 function crearServicioReservasMongo() {
 
-    async function contar() {
-        return reservas.length;
-    }
     async function listar(sala) {
         const filtro = {};
         if (sala !== undefined) {
@@ -32,6 +29,7 @@ function crearServicioReservasMongo() {
         const documentos = await Reserva.find(filtro).lean();
         return documentos.map(representarReserva);
     }
+
     async function obtenerPorId(id) {
         if (!mongoose.isObjectIdOrHexString(id)) {
             const error = new Error("Identificador inválido");
@@ -52,6 +50,11 @@ function crearServicioReservasMongo() {
         });
         return representarReserva(documento);
     }
+
+    async function contar() {
+        return await Reserva.countDocuments({}) ;
+    }
+
     return { contar, listar, obtenerPorId, crear };
 }
 module.exports = { crearServicioReservasMongo };

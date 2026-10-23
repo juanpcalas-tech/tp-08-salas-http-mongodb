@@ -2,10 +2,7 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const morgan = require("morgan");
 const path = require("node:path");
-const {
-    crearIdentificadorSolicitud,
-    medirDuracion,
-} = require("./middleware/solicitudes");
+const {crearIdentificadorSolicitud,medirDuracion,} = require("./middleware/solicitudes");
 const { crearManejadorErrores } = require("./middleware/errores");
 const { crearControladorReservas } = require("./controladores/reservas");
 const { crearRouterReservas } = require("./rutas/reservas");

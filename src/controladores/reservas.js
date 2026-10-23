@@ -27,9 +27,12 @@ function crearControladorReservas(servicio) {
         await servicio.crear(req.reservaValidada);
         res.redirect("/reservas");
     }
-    function estado(req, res) {
+    
+    async function estado(req, res) {
+        const cantidad = await servicio.contar()
         res.status(200).json({
-            cantidad: servicioReservas.contar(),
+            servicio: "Activo",
+            reservas: cantidad,
             idSolicitud: req.idSolicitud,
         });
     }
