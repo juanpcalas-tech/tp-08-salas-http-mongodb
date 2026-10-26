@@ -37,7 +37,7 @@ Endpoints persistentes de reservas de salas
 
     PORT=3000
     NODE_ENV=development
-    MONGODB_URI="mongodb+srv://<usuario>:<password>@cluster0.ggyk4zc.mongodb.net/reservas_salas_u8?retryWrites=true&w=majority&appName=Cluster0"
+    MONGODB_URI="mongodb+srv://usuario:password@cluster0.ggyk4zc.mongodb.net/reservas_salas_u8?retryWrites=true&w=majority&appName=Cluster0"
 
     Las credenciales de acceso y cadenas de conexión no se publican en el repositorio. Las mismas se gestionan mediante variables de entorno y se distribuyen por canales privados.
 
