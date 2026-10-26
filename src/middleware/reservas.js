@@ -9,7 +9,8 @@ function validarDatosReserva(req, res, next) {
     const fecha = typeof valores.fecha === "string" ? valores.fecha.trim() : "";
     const turno = typeof valores.turno === "string" ? valores.turno.trim() : "";
     const sala = typeof valores.sala === "string" ? valores.sala.trim() : "";
-    const personas = Number(valores.personas);
+    const tipovalido = typeof valorpersonas === "number" || (typeof valorpersonas === "string" && valorpersonas.trim() !=="");
+    const personas = tipovalido ?  Number(valorpersonas) : NaN;
     const salasDisponibles = ["Sala Norte", "Sala Sur", "Sala Multimedia"];
     const turnosDisponibles = ["Mañana", "Tarde", "Noche"];
 
@@ -33,17 +34,18 @@ function validarDatosReserva(req, res, next) {
         !fecha ||
         !turnosDisponibles.includes(turno) ||
         !salasDisponibles.includes(sala) ||
-        !Number.isFinite(personas) ||
-        personas < 1
+        !Number.isInteger(personas) ||
+        personas < 1 ||
+        personas > 6
     ) {
         if (req.baseUrl === "/api/reservas") {
-            return res.status(400).json({
-                error: "Completá los campos con un personas mayor o igual a 1.",
-            });
+            return res
+            .status(400)
+            .json({error: "Revisa los Datos de la Reserva",});
         }
         return res.status(400).render("reservas/nueva", {
             titulo: "Nueva Reserva",
-            error: "Completá los campos con personas mayor o igual a 1.",
+            error: "Revisa los Datos de la Reserva",
             valores,
         });
     }

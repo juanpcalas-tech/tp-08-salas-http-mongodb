@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 const { Reserva } = require("../modelos/reserva");
 function representarReserva(documento) {
@@ -13,9 +14,7 @@ function representarReserva(documento) {
     }
 };
 
-
 function crearServicioReservasMongo() {
-
     async function listar(sala) {
         const filtro = {};
         if (sala !== undefined) {
@@ -30,6 +29,10 @@ function crearServicioReservasMongo() {
         return documentos.map(representarReserva);
     }
 
+    async function contar() {
+        return await Reserva.countDocuments({}) ;
+    }
+
     async function obtenerPorId(id) {
         if (!mongoose.isObjectIdOrHexString(id)) {
             const error = new Error("Identificador inválido");
@@ -39,6 +42,7 @@ function crearServicioReservasMongo() {
         const documento = await Reserva.findById(id).lean();
         return documento ? representarReserva(documento) : null;
     }
+
     async function crear(datos) {
         const documento = await Reserva.create({
             estudiante: datos.estudiante,
@@ -51,10 +55,6 @@ function crearServicioReservasMongo() {
         return representarReserva(documento);
     }
 
-    async function contar() {
-        return await Reserva.countDocuments({}) ;
-    }
-
-    return { contar, listar, obtenerPorId, crear };
+     return { contar, listar, obtenerPorId, crear };
 }
 module.exports = { crearServicioReservasMongo };

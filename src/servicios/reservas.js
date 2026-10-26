@@ -3,9 +3,8 @@ function crearServicioreservas(reservasIniciales) {
   function listar() {
     return [...reservas];
   }
-  function obtenerPorId(id) {
-    return reservas.find((reserva) => reserva.id === id) ?? null;
-  }
+
+
   function crear(datosValidados) {
     const ultimoId = reservas.reduce(
       (mayor, reserva) => Math.max(mayor, reserva.id),
@@ -16,6 +15,8 @@ function crearServicioreservas(reservasIniciales) {
     return nuevo;
   }
 
-  return { listar, obtenerPorId, crear };
+
+
+  return { listar, contar, crear };
 }
 module.exports = { crearServicioreservas };

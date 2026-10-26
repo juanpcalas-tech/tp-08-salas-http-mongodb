@@ -7,7 +7,7 @@ const reservasSchema = new mongoose.Schema(
         fecha: { type: String, required: true, trim: true },
         turno: { type: String, required: true, enum: ["Mañana","Tarde","Noche"],},        
         personas: { type: Number, required: true, min: 1, max:6, validate: { validator: Number.isInteger, message: "Debe ser Entero"}, },
-        estado: { type: String, required: true, enum: ["Pendiente","Confirmada"],} 
+        estado: { type: String, enum: ["Pendiente","Confirmada"], default: "Pendiente", } 
     },     
     { collection: "reservas" },
 );
