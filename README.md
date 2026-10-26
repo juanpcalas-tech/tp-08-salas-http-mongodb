@@ -37,7 +37,9 @@ Endpoints persistentes de reservas de salas
 
     PORT=3000
     NODE_ENV=development
-    MONGODB_URI="mongodb+srv://juanpcalas_db_user:clave@cluster0.ggyk4zc.mongodb.net/reservas_salas_u8?retryWrites=true&w=majority&appName=Cluster0"
+    MONGODB_URI="mongodb+srv://<usuario>:<password>@cluster0.ggyk4zc.mongodb.net/reservas_salas_u8?retryWrites=true&w=majority&appName=Cluster0"
+
+    Las credenciales de acceso y cadenas de conexión no se publican en el repositorio. Las mismas se gestionan mediante variables de entorno y se distribuyen por canales privados.
 
 5. Diagnostico DSNS Resolutores utilizados
 
@@ -99,12 +101,18 @@ Endpoints persistentes de reservas de salas
 
 8. Tabla de Endpoints
     |METODO|ENDPOINT|DESCRIPCION|
+
+    |Caso|Endpoint|Esperado|
     | --- | --- | --- |
-    |GET	|/estado| Estado general|
-    |GET	|/api/reservas|	Listado completo|
-    |GET	|/api/reservas?sala=Sala Norte|	Filtrado|
-    |GET	|/api/reservas/:id|	Detalle|
-    |POST	|/api/reservas|	Crear reserva|
+    |Estado del servicio|GET /estado|200|
+    |Listado|GET /api/reservas|200|
+    |Filtrado por sala|GET /api/reservas?sala=Sala Norte|200|
+    |Obtener por ID válido|GET /api/reservas/:id|200|
+    |Obtener por ID inexistente|GET /api/reservas/:id|404|
+    |Crear reserva válida|POST /api/reservas|201|
+    |Email inválido|POST /api/reservas|400|
+    |Sala inválida|POST /api/reservas|400|
+    |Body vacío|POST /api/reservas|400|
 
 9. JASON ejemplo
     {
@@ -119,32 +127,41 @@ Endpoints persistentes de reservas de salas
 10. Validaciones
     
     * estudiante
-    obligatorio
-    no vacío
+        obligatorio
+        no vacío
     
     * email
-    obligatorio
-    debe contener @
+        obligatorio
+        no vacío
+        formato válido de correo electrónico
    
    * sala
-    Sala Norte
-    Sala Sur
-    Sala Multimedia
+    obligatorio
+        Valores
+            Sala Norte
+            Sala Sur
+            Sala Multimedia
     
     * turno
-    Mañana
-    Tarde
-    Noche
+    Obligatorio
+        Valores
+            Mañana
+            Tarde
+            Noche
     
     * personas
-    entero
-    mínimo 1
-    máximo 6
+        obligatorio
+        no vacío
+        Valores
+            entero
+            mínimo 1
+            máximo 6
     
     * fecha
-    obligatoria    
+        obligatoria 
+        no vacía   
 
-11. Evidencias
+11. Evidencias y Reproducción de pruebas en Postman
     Evidencia 1
     GET /api/reservas
 
@@ -180,60 +197,20 @@ Endpoints persistentes de reservas de salas
 
     Captura: docs/evidencias/07-persistencia-post-reinicio.png    
 
- 
 
-12. Reproducción de pruebas en Postman
-        Listar reservas
-        Método: GET
 
-        URL: http://localhost:3000/api/reservas
-
-        Body: No aplica
-
-        Respuesta esperada: 200 OK
-
-        []
-
-        o
-
-        [ {...} ]
-
-        Crear reserva
-        Método: POST
-
-        URL: http://localhost:3000/api/reservas
-
-        Headers:
-
-        Content-Type: application/json
-
-        Body:
-
-            {
-            "estudiante": "Ana Ejemplo",
-            "email": "ana@example.com",
-            "sala": "Sala Norte",
-            "fecha": "2026-10-21",
-            "turno": "Mañana",
-            "personas": 2
-            }
-
-        Respuesta esperada:
-
-        201 Created
-
-        Header:
-
-        Location: /api/reservas/{id}
-
-        Obtener una reserva
-        Método: GET
-
-        URL: http://localhost:3000/api/reservas/{id}
-
-        Respuesta esperada:
-
-        200 OK
+12. Controles de calidad
+        Validación de campos obligatorios.
+        Validación de formato de email.
+        Validación de salas permitidas.
+        Respuestas JSON consistentes en la API.
+        Manejo de errores 400.
+        Manejo de errores 404.
+        Persistencia verificada en MongoDB Atlas.
+        Variables sensibles externalizadas mediante .env.
+        Endpoint /estado operativo.
+        Código formateado con Prettier.
+        Análisis estático con ESLint.
 
 13. Comparación con TP07
         TP07	                        TP08

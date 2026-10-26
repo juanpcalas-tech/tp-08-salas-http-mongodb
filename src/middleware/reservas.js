@@ -10,17 +10,23 @@ function validarDatosReserva(req, res, next) {
     const turno = typeof valores.turno === "string" ? valores.turno.trim() : "";
     const sala = typeof valores.sala === "string" ? valores.sala.trim() : "";
     const personas = Number(valores.personas);
-
     const salasDisponibles = ["Sala Norte", "Sala Sur", "Sala Multimedia"];
     const turnosDisponibles = ["Mañana", "Tarde", "Noche"];
 
     if (!email.includes("@")) {
+        if (req.baseUrl === "/api/reservas") {
+            return res.status(400).json({
+                error: "Email inválido"
+            });
+        }
         return res.status(400).render("reservas/nueva", {
             titulo: "Nueva Reserva",
             error: "El correo electrónico debe contener el carácter '@'.",
-            valores: { estudiante, email, fecha, turno, sala, personas: req.body.personas },
+            valores: { estudiante, email, fecha, turno, sala, personas }
         });
     }
+
+
     if (
         !estudiante ||
         !email ||
