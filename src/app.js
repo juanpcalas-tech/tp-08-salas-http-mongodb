@@ -22,10 +22,10 @@ function crearApp({ servicioReservas, formatoRegistro }) {
     app.use(express.static(path.join(__dirname, "..", "public")));
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
+    app.get("/estado", controlador.estado);
     app.get("/", (req, res) => {
         res.render("inicio", { titulo: "Reserva Salas" });
     });
-  
     app.use("/api/reservas", crearRouterReservasApi(controlador));
     app.use("/reservas", crearRouterReservas(controlador));
     app.use((req, res) => {
