@@ -9,24 +9,12 @@ function validarDatosReserva(req, res, next) {
     const fecha = typeof valores.fecha === "string" ? valores.fecha.trim() : "";
     const turno = typeof valores.turno === "string" ? valores.turno.trim() : "";
     const sala = typeof valores.sala === "string" ? valores.sala.trim() : "";
-    const tipovalido = typeof valores.personas === "number" || (typeof valores.personas === "string" && valores.personas.trim() !== "");
-        const personas = tipovalido ?  Number(valores.personas) : NaN;
+    const tipovalido = typeof valores.personas === "number" || (typeof valores.personas === "string" && valores.personas.trim() !=="");
+    const personas = tipovalido ?  Number(valores.personas) : NaN;
     const salasDisponibles = ["Sala Norte", "Sala Sur", "Sala Multimedia"];
     const turnosDisponibles = ["Mañana", "Tarde", "Noche"];
 
-    if (!email.includes("@")) {
-        if (req.baseUrl === "/api/reservas") {
-            return res.status(400).json({
-                error: "Email inválido"
-            });
-        }
-        return res.status(400).render("reservas/nueva", {
-            titulo: "Nueva Reserva",
-            error: "El correo electrónico debe contener el carácter '@'.",
-            valores: { estudiante, email, fecha, turno, sala, personas }
-        });
-    }
-
+    const valoresLimpios = { estudiante, email, fecha, turno, sala, personas };
 
     if (
         !estudiante ||
@@ -46,10 +34,24 @@ function validarDatosReserva(req, res, next) {
         return res.status(400).render("reservas/nueva", {
             titulo: "Nueva Reserva",
             error: "Revisa los Datos de la Reserva",
-            valores,
+            valores: valoresLimpios
         });
     }
-    req.reservaValidada = { estudiante, email, fecha, turno, sala, personas };
+
+    if (!email.includes("@")) {
+        if (req.baseUrl === "/api/reservas") {
+            return res.status(400).json({
+                error: "Email inválido"
+            });
+        }
+        return res.status(400).render("reservas/nueva", {
+            titulo: "Nueva Reserva",
+            error: "El correo electrónico debe contener el carácter '@'.",
+            valores: valoresLimpios
+        });
+    }
+    req.reservaValidada = valoresLimpios;
+
     next();
 }
 module.exports = { prepararAreaReservas, validarDatosReserva };
