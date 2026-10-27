@@ -9,8 +9,8 @@ function validarDatosReserva(req, res, next) {
     const fecha = typeof valores.fecha === "string" ? valores.fecha.trim() : "";
     const turno = typeof valores.turno === "string" ? valores.turno.trim() : "";
     const sala = typeof valores.sala === "string" ? valores.sala.trim() : "";
-    const tipovalido = typeof valorpersonas === "number" || (typeof valorpersonas === "string" && valorpersonas.trim() !=="");
-    const personas = tipovalido ?  Number(valorpersonas) : NaN;
+    const tipovalido = typeof valores.personas === "number" || (typeof valores.personas === "string" && valores.personas.trim() !== "");
+        const personas = tipovalido ?  Number(valores.personas) : NaN;
     const salasDisponibles = ["Sala Norte", "Sala Sur", "Sala Multimedia"];
     const turnosDisponibles = ["Mañana", "Tarde", "Noche"];
 
