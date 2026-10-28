@@ -13,8 +13,9 @@ function validarDatosReserva(req, res, next) {
     const personas = tipovalido ?  Number(valores.personas) : NaN;
     const salasDisponibles = ["Sala Norte", "Sala Sur", "Sala Multimedia"];
     const turnosDisponibles = ["Mañana", "Tarde", "Noche"];
+    const DisponibleOpciones = ["Pendiente","Confirmada"];
 
-    const valoresLimpios = { estudiante, email, fecha, turno, sala, personas };
+    const valoresLimpios = { estudiante, email, fecha, turno, sala, personas, disponible };
 
     if (
         !estudiante ||
@@ -24,7 +25,8 @@ function validarDatosReserva(req, res, next) {
         !salasDisponibles.includes(sala) ||
         !Number.isInteger(personas) ||
         personas < 1 ||
-        personas > 6
+        personas > 6 ||
+        !DisponibleOpciones.includes(disponible)         
     ) {
         if (req.baseUrl === "/api/reservas") {
             return res

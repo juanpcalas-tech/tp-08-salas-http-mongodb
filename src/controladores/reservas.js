@@ -15,16 +15,21 @@ function crearControladorReservas(servicio) {
         });
     }
 
-    function mostrarDetalle(req, res) {
-        const id = Number(req.params.id);
-        const reserva = servicio.obtenerPorId(id);
+    async function mostrarDetalle(req, res) {
+        const reserva = await servicio.obtenerPorId(req.params.id);
         if (!reserva) {
             return res.status(404).render("no-encontrado", {
                 titulo: "Reserva no encontrada",
                 mensaje: "No existe una reserva con ese identificador.",
             });
         }
-        res.render("reservas/detalle", { titulo: reserva.estudiante, reserva });
+        res.render("reservas/detalle", {
+            titulo: reserva.estudiante,
+            id: reserva.id, 
+            fecha: reserva.fecha,
+            sala: reserva.sala,
+            reserva 
+        });
     }
 
     async function crear(req, res) {
@@ -32,14 +37,14 @@ function crearControladorReservas(servicio) {
         res.redirect("/reservas");
     }
 
-async function estado(req, res) {
-    const cantidad = await servicio.contar();
-    res.status(200).json({
-        servicio: "Activo",
-        reservas: cantidad,
-        idSolicitud: res.locals.idSolicitud,
-    });
-}
+    async function estado(req, res) {
+        const cantidad = await servicio.contar();
+        res.status(200).json({
+            servicio: "Activo",
+            reservas: cantidad,
+            Solicitudid: res.locals.idSolicitud,
+        });
+    }
 
     async function listarApi(req, res) {
         const reservas = await servicio.listar(req.query.sala);
@@ -59,7 +64,7 @@ async function estado(req, res) {
         res.location(`/api/reservas/${reserva.id}`).status(201).json(reserva);
     }
 
-    return { listar, mostrarFormulario, mostrarDetalle ,crear, estado, listarApi, obtenerApi, crearApi };
+    return { listar, mostrarFormulario, mostrarDetalle, crear, estado, listarApi, obtenerApi, crearApi };
 }
 module.exports = { crearControladorReservas };
 
