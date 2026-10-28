@@ -10,7 +10,7 @@ function representarReserva(documento) {
         fecha: documento.fecha,
         turno: documento.turno,
         personas: documento.personas,
-        disponible: documento.disponible
+        estado: documento.estado
     }
 };
 
@@ -51,6 +51,7 @@ function crearServicioReservasMongo() {
             fecha: datos.fecha,
             turno: datos.turno,
             personas: datos.personas,
+            estado: datos.estado
         });
         return representarReserva(documento);
     }

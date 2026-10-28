@@ -11,11 +11,13 @@ function validarDatosReserva(req, res, next) {
     const sala = typeof valores.sala === "string" ? valores.sala.trim() : "";
     const tipovalido = typeof valores.personas === "number" || (typeof valores.personas === "string" && valores.personas.trim() !=="");
     const personas = tipovalido ?  Number(valores.personas) : NaN;
+    const estado = typeof valores.estado === "string" ? valores.estado.trim() : "";
+    
     const salasDisponibles = ["Sala Norte", "Sala Sur", "Sala Multimedia"];
     const turnosDisponibles = ["Mañana", "Tarde", "Noche"];
-    const DisponibleOpciones = ["Pendiente","Confirmada"];
+    const estadosDisponibles = ["Pendiente","Confirmada"];
 
-    const valoresLimpios = { estudiante, email, fecha, turno, sala, personas, disponible };
+    const valoresLimpios = { estudiante, email, fecha, turno, sala, personas, estado };
 
     if (
         !estudiante ||
@@ -26,7 +28,7 @@ function validarDatosReserva(req, res, next) {
         !Number.isInteger(personas) ||
         personas < 1 ||
         personas > 6 ||
-        !DisponibleOpciones.includes(disponible)         
+        !estadosDisponibles.includes(estado)         
     ) {
         if (req.baseUrl === "/api/reservas") {
             return res
